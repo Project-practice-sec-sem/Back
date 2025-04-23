@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '10.13.76.31'
+    '10.13.69.33'
 ]
 
 
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'metals_app'
+    'metals_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

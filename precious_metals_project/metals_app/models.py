@@ -9,8 +9,6 @@ class Metal(models.Model):
     price_week_ago = models.DecimalField(max_digits=20, decimal_places=4, null=True, blank=True)
     price_month_days_ago = models.DecimalField(max_digits=20, decimal_places=4, null=True, blank=True)
 
-    # Аналогично можно добавить для других валют (RUB, GBP и т.д.)
-
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

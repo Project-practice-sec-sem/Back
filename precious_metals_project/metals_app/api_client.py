@@ -18,7 +18,6 @@ def update_metal_prices():
 
         # Обновляем базу данных
         for full_symbol, rate in data.get('rates', {}).items():
-            # Пример: full_symbol = 'USDXAU', нам нужно 'XAU'
             if full_symbol.startswith('USD'):
                 symbol = full_symbol[3:]  # отрезаем 'USD'
             else:
@@ -28,7 +27,7 @@ def update_metal_prices():
                 symbol=symbol,
                 defaults={
                     'name': Command.get_metal_name(symbol),
-                    'price': rate,  # Используйте поле модели, например price_today, если есть
+                    'price': rate,
                     'price_change': Command.calculate_price_change(symbol, rate)
                 }
             )

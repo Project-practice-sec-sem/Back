@@ -21,5 +21,5 @@ from metals_app.views import metals_json_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/metals/', metals_json_view, name='metal-prices'),
-    path('', metals_json_view, name='home'),  # Добавлен маршрут для главной страницы
+    path('', metals_json_view, name='home'),
 ]
