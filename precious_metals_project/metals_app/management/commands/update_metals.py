@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 # Текущая цена
                 live_data = client.fetchLive(base=base_currency, currencies=[symbol])
                 print(f"Ответ live_data для {symbol}:", live_data)
-                price_today = live_data.get('rates', {}).get(f'USD{symbol}')
+                price_today = str(float(live_data.get('rates', {}).get(f'USD{symbol}')) / 28.35)
                 if price_today is None:
                     self.stdout.write(self.style.ERROR(f"Нет данных 'rates' для USD{symbol} в live_data: {live_data}"))
                     continue
@@ -36,7 +36,7 @@ class Command(BaseCommand):
                     currencies=[symbol]
                 )
                 print(f"Ответ historical_week для {symbol}:", historical_week)
-                price_week_ago = historical_week.get('rates', {}).get(f'USD{symbol}')
+                price_week_ago = str(float(historical_week.get('rates', {}).get(f'USD{symbol}')) / 28.35)
                 if price_week_ago is None:
                     self.stdout.write(self.style.WARNING(f"Нет данных 'rates' для USD{symbol} в historical_week: {historical_week}"))
 
@@ -47,9 +47,9 @@ class Command(BaseCommand):
                     currencies=[symbol]
                 )
                 print(f"Ответ historical_month_days для {symbol}:", historical_month_days)
-                price_month_days_ago = historical_month_days.get('rates', {}).get(f'USD{symbol}')
+                price_month_days_ago = str(float(historical_month_days.get('rates', {}).get(f'USD{symbol}')) / 28.35)
                 if price_month_days_ago is None:
-                    self.stdout.write(self.style.WARNING(f"Нет данных 'rates' для USD{symbol} в historical_month_days: {historical_three_days}"))
+                    self.stdout.write(self.style.WARNING(f"Нет данных 'rates' для USD{symbol} в historical_month_days: {historical_month_days}"))
 
                 # Обновление или создание записи
                 Metal.objects.update_or_create(

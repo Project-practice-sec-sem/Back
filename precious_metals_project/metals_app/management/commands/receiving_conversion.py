@@ -12,7 +12,6 @@ def fetch_currency_rates():
         response.raise_for_status()
         data = response.json()
         rates = data.get('rates', {})
-        print(rates)
         return rates
     except Exception as e:
         print(f"Ошибка при получении курсов валют: {e}")
