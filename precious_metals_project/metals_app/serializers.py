@@ -22,6 +22,11 @@ class MetalSerializer(serializers.ModelSerializer):
         prices = obj.converted_prices.all()
         for price in prices:
             if price.currency not in result:
-                result[price.currency] = {}
+                result[price.currency] = {
+                'currency_name': price.currency_name,
+                'today': None,
+                'week_ago': None,
+                'month_days_ago': None
+            }
             result[price.currency][price.date_type] = str(price.price)
         return result

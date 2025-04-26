@@ -19,6 +19,7 @@ class Metal(models.Model):
 class MetalPrice(models.Model):
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name='converted_prices')
     currency = models.CharField(max_length=10)  # 'EUR', 'RUB', 'GBP', и т.д.
+    currency_name = models.CharField(max_length=100, blank=True)
     date_type = models.CharField(max_length=20)  # 'today', 'week_ago', 'month_days_ago'
     price = models.DecimalField(max_digits=20, decimal_places=4)
 
