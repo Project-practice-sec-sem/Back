@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from metals_app.views import metals_json_view
+from metals_app.views import metals_json_view, ai_advice_json_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/metals/', metals_json_view, name='metal-prices'),
     path('', metals_json_view, name='home'),
+    path('ai-advice/', ai_advice_json_view, name='ai-advice'),
 ]

@@ -1,12 +1,3 @@
-# from django.core.management.base import BaseCommand
-# from metals_app.scheduler import start
-#
-# class Command(BaseCommand):
-#     help = 'Запускает планировщик задач'
-#     print('запустился run_sheluder')
-#
-#     def handle(self, *args, **options):
-#         start()
 
 from django.core.management.base import BaseCommand
 from metals_app.scheduler import start_scheduler
