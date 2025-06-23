@@ -16,6 +16,7 @@ def metals_json_view(request):
     return JsonResponse(serializer.data, safe=False)
 
 
+
 def ai_advice_json_view(request):
     metals = Metal.objects.exclude(
         price_today__isnull=True,

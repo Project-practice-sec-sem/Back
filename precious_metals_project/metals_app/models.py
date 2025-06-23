@@ -29,3 +29,13 @@ class MetalPrice(models.Model):
     def __str__(self):
         return f"{self.metal.symbol} {self.currency} {self.date_type}: {self.price}"
 
+class MetalPriceHistory(models.Model):
+    metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name='price_history')
+    date = models.DateField()
+    price = models.DecimalField(max_digits=20, decimal_places=4)
+
+    class Meta:
+        unique_together = ('metal', 'date')
+
+    def __str__(self):
+        return f"{self.metal.symbol} {self.date}: {self.price}"

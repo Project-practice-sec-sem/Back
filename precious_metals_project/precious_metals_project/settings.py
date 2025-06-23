@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '10.13.75.138',
+    '10.13.64.135',
     '127.0.0.1',
 ]
 
@@ -93,13 +93,23 @@ WSGI_APPLICATION = 'precious_metals_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'OPTIONS': {
+#             'timeout': 30,
+#         }
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'OPTIONS': {
-            'timeout': 30,
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'metalproject',       # имя вашей базы
+        'USER': 'postgres',            # имя пользователя
+        'PASSWORD': 'Atternos!3',    # пароль
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

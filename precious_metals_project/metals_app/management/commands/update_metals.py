@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from metalpriceapi.client import Client
-from metals_app.models import Metal
+from metals_app.models import Metal, MetalPriceHistory
 from .receiving_conversion import convert_and_save_all_prices
 
 class Command(BaseCommand):
@@ -52,7 +52,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.WARNING(f"Нет данных 'rates' для USD{symbol} в historical_month_days: {historical_month_days}"))
 
                 # Обновление или создание записи
-                Metal.objects.update_or_create(
+                metal, created = Metal.objects.update_or_create(
                     symbol=symbol,
                     defaults={
                         'name': self.get_metal_name(symbol),
@@ -61,6 +61,9 @@ class Command(BaseCommand):
                         'price_month_days_ago': price_month_days_ago
                     }
                 )
+                # Сохраняем историю за 7 дней в USD
+                self.save_price_history(client, metal, today)
+
 
             except Exception as e:
                 self.stdout.write(self.style.ERROR(f'Ошибка для {symbol}: {str(e)}'))
@@ -69,6 +72,26 @@ class Command(BaseCommand):
         convert_and_save_all_prices()
 
         self.stdout.write(self.style.SUCCESS('✅ Данные обновлены!'))
+
+    def save_price_history(self, client, metal, today):
+        for i in range(1, 8):  # с 1 по 7 день назад, исключая сегодня (0)
+            date = today - timedelta(days=i)
+            response = client.fetchHistorical(
+                date=date.strftime('%Y-%m-%d'),
+                base='USD',
+                currencies=[metal.symbol]
+            )
+            raw_price = response.get('rates', {}).get(f'USD{metal.symbol}')
+            if raw_price is None:
+                print(f"Нет данных для {metal.symbol} на {date}")
+                continue
+            price = float(raw_price) / 28.35
+            MetalPriceHistory.objects.update_or_create(
+                metal=metal,
+                date=date,
+                defaults={'price': price}
+            )
+
 
     def get_metal_name(self, symbol):
         names = {
