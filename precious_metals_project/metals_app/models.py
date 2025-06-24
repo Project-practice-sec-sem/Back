@@ -20,6 +20,7 @@ class MetalPrice(models.Model):
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name='converted_prices')
     currency = models.CharField(max_length=10)  # 'EUR', 'RUB', 'GBP', и т.д.
     currency_name = models.CharField(max_length=100, blank=True)
+    currency_name_en = models.CharField(max_length=100, blank=True)
     date_type = models.CharField(max_length=20)  # 'today', 'week_ago', 'month_days_ago'
     price = models.DecimalField(max_digits=20, decimal_places=4)
 
@@ -27,7 +28,7 @@ class MetalPrice(models.Model):
         unique_together = ('metal', 'currency', 'date_type')
 
     def __str__(self):
-        return f"{self.metal.symbol} {self.currency} {self.date_type}: {self.price}"
+        return f"{self.metal.symbol} {self.currency}  {self.date_type}: {self.price}"
 
 class MetalPriceHistory(models.Model):
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name='price_history')

@@ -38,9 +38,13 @@ def ai_advice_json_view(request):
     }
 
     analyzer = AI_V1()
-    advice = analyzer.analyze_metals(analysis_data)
+    advice_full = analyzer.analyze_metals(analysis_data)
 
-    if not advice:
+    if not advice_full:
         return JsonResponse({"error": "Не удалось получить анализ"}, status=500)
 
-    return JsonResponse({"advice": advice})
+    parts = advice_full.split('===')
+    advice = parts[0].strip() if len(parts) > 0 else ""
+    en_advice = parts[1].strip() if len(parts) > 1 else ""
+
+    return JsonResponse({"advice": advice, "en_advice": en_advice})

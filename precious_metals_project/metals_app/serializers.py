@@ -26,6 +26,7 @@ class MetalSerializer(serializers.ModelSerializer):
             if price.currency not in result:
                 result[price.currency] = {
                 'currency_name': price.currency_name,
+                'currency_name_en': price.currency_name_en,
                 'today': None,
                 'week_ago': None,
                 'month_days_ago': None
